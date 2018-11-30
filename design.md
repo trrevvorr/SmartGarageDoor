@@ -10,7 +10,7 @@
 ### Step One
 - QR Code on the back of device links to afformetioned account authorization page
 - QR Code link includes optional `state` parameter which includes the device ID. This tells the client which Photon it's talking to.
-- **WARNING**: sending the device ID over a URL like this isn't very secure. 
+- **WARNING**: Storing both the Particle API key and instagram API key on the QR code is not safe. Sending these via a plain URL isn't great either.  
 - Once the user scans the QR Code, they are navigated to the "Account authorization page"
 - Before rendering, the authorization page makes a request to the Photon, checking that:
   - The passed up device ID matches the account ID
