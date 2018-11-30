@@ -5,8 +5,8 @@ function linkInstagram() {
 	const particleAccessToken = urlParams.get("particle_access_token");
 	const particleDeviceId = urlParams.get("particle_device_id");
 	const instagramClientId = urlParams.get("instagram_client_id");
-	const redirectURI = `https://trrevvorr.github.io/InternetPoints/authorize/authorizeInstagram?particle_access_token=${particleAccessToken}&particle_device_id=${particleDeviceId}`;
-	const instagramRequest = `https://api.instagram.com/oauth/authorize/?client_id=${instagramClientId}&redirect_uri=${redirectURI}&response_type=token`;
+	const redirectURI = encodeURI(`https://trrevvorr.github.io/InternetPoints/authorize/authorizeInstagram?particle_access_token=${particleAccessToken}&particle_device_id=${particleDeviceId}`);
+	const instagramRequest = `https://api.instagram.com/oauth/authorize/?client_id=${instagramClientId}&response_type=token&redirect_uri=${redirectURI}`;
 
 	window.location.href = instagramRequest;
 }
