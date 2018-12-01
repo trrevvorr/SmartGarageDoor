@@ -36,8 +36,10 @@ function failMessage() {
 }
 
 function setStatusMessage(status) {
-	const statusNode = document.querySelector("#status");
-	statusNode.textContent = status;
+	setTimeout(() => {
+		const statusNode = document.querySelector("#status");
+		statusNode.textContent = status;
+	}, 100); // give DOM time to render, TODO: find better way to implment this
 }
 
 function decodeParticleCredentials(particleCredentials) {
