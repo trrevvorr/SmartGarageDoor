@@ -56,8 +56,8 @@ function validateInstagramResponse(instagramAccessToken) {
 function sendInstagramTokenToParticle(particleAccessToken, particleDeviceId, instagramAccessToken) {
 	const url = `https://api.particle.io/v1/devices/${particleDeviceId}/linkIG`;
 	const data = {
-		access_token = particleAccessToken,
-		arg = instagramAccessToken,
+		access_token: particleAccessToken,
+		arg: instagramAccessToken,
 	};
 	var postRequest = $.post( url, data).done(successMessage()).fail(failMessage());
 }
