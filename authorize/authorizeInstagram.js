@@ -61,5 +61,5 @@ function sendInstagramTokenToParticle(particleAccessToken, particleDeviceId, ins
 		access_token: particleAccessToken,
 		arg: instagramAccessToken,
 	};
-	var postRequest = $.post( url, data).done(successMessage()).fail(failMessage());
+	var postRequest = $.post( url, data).done(() => {successMessage()}).fail(() => {failMessage()});
 }
