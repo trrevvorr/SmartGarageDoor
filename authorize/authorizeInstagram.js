@@ -1,21 +1,36 @@
 // assuming url = https://trrevvorr.github.io/InternetPoints/authorize/authorizeInstagram?particle_access_token=<TOKEN>&particle_device_id=<TOKEN>#access_token=ACCESS-TOKEN
 
-let STATUS = "Loading...";
+let STATUS = {
+	title: "Loading...",
+	details: "",
+};
 document.onload = () => {trySetStatusMessage(STATUS);}
 
 // Instagram account successfully linked and sent down to Photon device
 function successMessage() {
-	trySetStatusMessage("Instagram Account Linked!");
+	const status = {
+		title: "Success!",
+		details: "Your Instagram account has successfully been linked to your device!",
+	};
+	trySetStatusMessage(status);
 }
 
 // Instagram authorization failed
 function failLinkMessage() {
-	trySetStatusMessage("Failed to link Instagram account. Please try again later.");
+	const status = {
+		title: "Error :/",
+		details: "Failed to link your Instagram account. Please try again later.",
+	};
+	trySetStatusMessage(status);
 }
 
 // failed to send access token down to Photon device
 function failPhotonMessage() {
-	trySetStatusMessage("Failed to authenticate with your device. Please ensure your device is online and try again.");
+	const status = {
+		title: "Error :/",
+		details: "Failed to authenticate with your device. Please ensure your device is online and try again.",
+	};
+	trySetStatusMessage(status);
 }
 
 // try writing status to screen, if failed, store status off in variable to be written after DOM renders
@@ -23,7 +38,8 @@ function trySetStatusMessage(status) {
 	STATUS = status;
 	const statusNode = document.querySelector("#status");
 	if (statusNode) {
-		statusNode.textContent = STATUS;
+		statusNode.querySelector(".title").textContent = STATUS.title;
+		statusNode.querySelector(".details").textContent = STATUS.details;
 	}
 }
 
