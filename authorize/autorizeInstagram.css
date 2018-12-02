@@ -1,5 +1,31 @@
-body {
+body,
+html {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0; 
+  background: 
+    linear-gradient( #400080, transparent), 
+    linear-gradient( 200deg, #d047d1, #ff0000,    #ffff00);
+  color: white;
+  font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
 #status {
+    padding: 1rem;
+    padding-top: 4rem;
+    max-width: 30rem;
+    margin: auto;
+}
+
+#status .title {
+    font-size: 3rem;
+}
+
+#status .details {
+    font-size: 1rem;
 }
