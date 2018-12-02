@@ -3,14 +3,19 @@
 let STATUS = "Loading...";
 document.onload = () => {trySetStatusMessage(STATUS);}
 
-// try writing success message to screen
+// Instagram account successfully linked and sent down to Photon device
 function successMessage() {
 	trySetStatusMessage("Instagram Account Linked!");
 }
 
-// try writing fail message to screen
-function failMessage() {
+// Instagram authorization failed
+function failLinkMessage() {
 	trySetStatusMessage("Failed to link Instagram account. Please try again later.");
+}
+
+// failed to send access token down to Photon device
+function failPhotonMessage() {
+	trySetStatusMessage("Failed to authenticate with your device. Please ensure your device is online and try again.");
 }
 
 // try writing status to screen, if failed, store status off in variable to be written after DOM renders
@@ -31,7 +36,7 @@ if (validateInstagramResponse(instagramAccessToken)) {
 	sendInstagramTokenToParticle(particleAccessToken, particleDeviceId, instagramAccessToken);
 } else {
 	console.log([particleAccessToken, particleDeviceId, instagramAccessToken]);
-	failMessage();
+	failLinkMessage();
 }
 
 // retrieve access token from URL
@@ -72,5 +77,5 @@ function sendInstagramTokenToParticle(particleAccessToken, particleDeviceId, ins
 		access_token: particleAccessToken,
 		arg: instagramAccessToken,
 	};
-	var postRequest = $.post( url, data).done(() => {successMessage()}).fail(() => {failMessage()});
+	var postRequest = $.post( url, data).done(() => {successMessage()}).fail(() => {failPhotonMessage()});
 }
