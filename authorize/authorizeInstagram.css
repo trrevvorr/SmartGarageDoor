@@ -20,10 +20,12 @@ html {
     padding-top: 4rem;
     max-width: 30rem;
     margin: auto;
+    font-weight: bold;
 }
 
 #status .title {
     font-size: 3rem;
+    padding-bottom: 1rem;
 }
 
 #status .details {
