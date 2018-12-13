@@ -57,4 +57,4 @@ function timeout() {
 
 setTimeout(() => {
 	timeout();
-}, 8000);
+}, 10000);

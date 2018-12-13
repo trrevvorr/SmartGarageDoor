@@ -4,30 +4,60 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  padding-top: 2rem;
   top:0;
   left:0;
   right:0;
-  bottom:0; 
-  background: 
-    linear-gradient( #400080, transparent), 
-    linear-gradient( 200deg, #d047d1, #ff0000,    #ffff00);
-  color: white;
+  bottom:0;
   font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
-#status {
-    padding: 2rem;
-    padding-top: 4rem;
-    max-width: 30rem;
-    margin: auto;
+body.onlineState .offline,
+body.onlineState .loading,
+body.onlineState .authFailed,
+body.offlineState .online,
+body.offlineState .loading,
+body.offlineState .authFailed,
+body.loadingState .offline,
+body.loadingState .online,
+body.loadingState .authFailed,
+body.authFailedState .offline,
+body.authFailedState .online,
+body.authFailedState .loading {
+  display: none;
+}
+
+.deviceStatus {
+  text-align: center;
+}
+
+.deviceStatus.offline span {
+  color: red;
+}
+
+.instructions {
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.loadingIndicator {
+  text-align: center;
+}
+
+.loadingIndicator .spinner {
+  margin-top: 2rem;
+  font-size: 3rem;
+}
+
+.linkInstagram {
+  width: 100%;
+  text-align: center;
+}
+
+.linkInstagram button {
+    width: 100%;
+    font-size: 1.5rem;
     font-weight: bold;
-}
-
-#status .title {
-    font-size: 3rem;
-    padding-bottom: 1rem;
-}
-
-#status .details {
-    font-size: 1rem;
 }
