@@ -1,11 +1,17 @@
 // assuming url = https://trrevvorr.github.io/InternetPoints/link/linkAccount?particle_access_token=<TOKEN>&particle_device_id=<TOKEN>&instagram_client_id=<TOKEN>
 
-function linkInstagram() {
+function parseURL() {
 	const urlParams = new URLSearchParams(window.location.search);
 	const particleAccessToken = urlParams.get("particle_access_token");
 	const particleDeviceId = urlParams.get("particle_device_id");
-	const particleCredentials = encodeParticleCredentials(particleAccessToken, particleDeviceId);
 	const instagramClientId = urlParams.get("instagram_client_id");
+
+	return { particleAccessToken, particleDeviceId, instagramClientId };
+}
+
+function linkInstagram() {
+	const { particleAccessToken, particleDeviceId, instagramClientId } = parseURL();
+	const particleCredentials = encodeParticleCredentials(particleAccessToken, particleDeviceId);
 	const redirectURI = encodeURI(`https://trrevvorr.github.io/InternetPoints/authorize/authorizeInstagram?particle_credentials=${particleCredentials}`);
 	const instagramRequest = `https://api.instagram.com/oauth/authorize/?client_id=${instagramClientId}&response_type=token&redirect_uri=${redirectURI}`;
 
@@ -17,3 +23,40 @@ function encodeParticleCredentials(particleAccessToken, particleDeviceId) {
 	const delimeter = "-";
 	return particleAccessToken + delimeter + particleDeviceId;
 }
+
+function startPingDevice() {
+	const { particleAccessToken, particleDeviceId } = parseURL();
+	pingDevice(particleAccessToken, particleDeviceId);
+}
+
+// send instagram token down to photon device
+function pingDevice(particleAccessToken, particleDeviceId) {
+	$.ajax({
+		url: `https://api.particle.io/v1/devices/${particleDeviceId}/ping`,
+		data: {
+			access_token: particleAccessToken,
+		},
+		type: 'PUT',
+		success: () => { pingSuccess(data) },
+	});
+}
+
+function pingSuccess(response) {
+	var parsed_data = JSON.parse(response);
+
+	if (parsed_data.online) {
+		document.querySelector("body").className = "onlineStatus";
+	} else {
+		document.querySelector("body").className = "offlineStatus";
+	}
+}
+
+function timeout() {
+	if (document.querySelector("body").className === "loadingState") {
+		document.querySelector("body").className = "offlineState"
+	}
+}
+
+setTimeout(() => {
+	timeout();
+}, 8000);

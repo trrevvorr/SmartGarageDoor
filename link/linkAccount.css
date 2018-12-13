@@ -4,31 +4,73 @@ html {
   height: 100%;
   margin: 0;
   padding: 0;
+  padding-top: 2rem;
   top:0;
   left:0;
   right:0;
   bottom:0; 
-  background: 
-    linear-gradient( #400080, transparent), 
-    linear-gradient( 200deg, #d047d1, #ff0000,    #ffff00);
-  color: white;
   font-family: "Trebuchet MS", Helvetica, sans-serif
 }
 
+body.onlineState .offline,
+body.onlineState .loading,
+body.offlineState .online,
+body.offlineState .loading,
+body.loadingState .offline,
+body.loadingState .online {
+  display: none;
+}
+
+.deviceStatus {
+  text-align: center;
+}
+
+.deviceStatus .online span {
+  color: green;
+}
+.deviceStatus .offline span {
+  color: red;
+}
+
+.instructions {
+  margin-top: 3rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.5rem;
+}
+
+.loadingIndicator {
+  text-align: center;
+}
+
+.loadingIndicator .spinner {
+  margin-top: 2rem;
+  font-size: 3rem;
+}
+
 .linkInstagram {
-  margin: auto;
-  padding-top: 4rem;
-  width: 18rem;
+  /* margin: auto; */
+  margin-top: 4rem;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  width: 100%;
+  background-color: black;
+  border-radius: 8px;
+}
+
+.linkInstagram:active {
+  padding: 0;
 }
 
 .linkInstagram button {
     cursor: pointer;
     padding: 0.5rem 1rem;
-    background-color: transparent;
-    border: 2px solid white;
-    border-radius: 2rem;
+    background-color: white;
+
+    border: 1px solid black;
+    border-radius: 8px;
+
     font-size: 2rem;
-    color: white;
     line-height: 2rem;
     font-weight: bold;
     width: 100%;
