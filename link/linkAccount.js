@@ -37,17 +37,15 @@ function pingDevice(particleAccessToken, particleDeviceId) {
 			access_token: particleAccessToken,
 		},
 		type: 'PUT',
-		success: () => { pingSuccess(data) },
+		success: (data) => { pingSuccess(data) },
 	});
 }
 
 function pingSuccess(response) {
-	var parsed_data = JSON.parse(response);
-
-	if (parsed_data.online) {
-		document.querySelector("body").className = "onlineStatus";
+	if (response.online) {
+		document.querySelector("body").className = "onlineState";
 	} else {
-		document.querySelector("body").className = "offlineStatus";
+		document.querySelector("body").className = "offlineState";
 	}
 }
 
