@@ -9,7 +9,7 @@ html {
   left:0;
   right:0;
   bottom:0;
-  font-family: "Trebuchet MS", Helvetica, sans-serif
+  font-family: system-ui;
 }
 
 body.onlineState .offline,
@@ -38,7 +38,6 @@ body.authFailedState .loading {
 .instructions {
   margin-top: 3rem;
   font-size: 1.2rem;
-  font-weight: bold;
   line-height: 1.5rem;
 }
 
