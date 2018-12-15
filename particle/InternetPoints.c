@@ -1,7 +1,12 @@
 // This #include statement was automatically added by the Particle IDE.
+#include <SoftAPLib.h>
 #include <ledmatrix-max7219-max7221.h>
 
+// allows loop to continue even when trying to connect to a network
 SYSTEM_THREAD(ENABLED);
+
+// Initialize objects from the SoftAp lib
+STARTUP(softap_set_application_page_handler(SoftAPLib::getPage, nullptr));
 
 #pragma region globals {
 
@@ -32,7 +37,10 @@ const int _OFFLINE_THROTTLE_MAX = 80;
 
 // Button globals
 const int _BUTTON_PIN = D5;
-bool _button_pressed = false;
+bool _ButtonPressed = false;
+int _ButtonHolds = 0;
+const int _BUTTON_PRESS_MAX = 160;
+const int _BUTTON_PRESS_MIN = 9;
 
 #pragma endregion globals }
 
@@ -628,17 +636,30 @@ int sumLikes(String response)
 
 void check_button()
 {
+    // if button is pressed in
     if (digitalRead(_BUTTON_PIN) == LOW)
     {
-        if (!_button_pressed)
+        _ButtonPressed = true;
+        _ButtonHolds++;
+
+        // triggered one "hold" after the button press zone
+        if (_ButtonHolds == _BUTTON_PRESS_MAX + 1)
         {
-            toggleDataType();
-            _button_pressed = true;
+            WiFi.listen();
         }
     }
+    // if button is not pressed in
     else
     {
-        _button_pressed = false;
+        // if button was released within the button press zone
+        if (_ButtonPressed && (_ButtonHolds >= _BUTTON_PRESS_MIN) && (_ButtonHolds <= _BUTTON_PRESS_MAX))
+        {
+            toggleDataType();
+        }
+
+        // reset button state
+        _ButtonPressed = false;
+        _ButtonHolds = 0;
     }
 }
 
