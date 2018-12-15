@@ -1,6 +1,8 @@
 // This #include statement was automatically added by the Particle IDE.
 #include <ledmatrix-max7219-max7221.h>
 
+SYSTEM_THREAD(ENABLED);
+
 #pragma region globals {
 
 // EEPROM globals
@@ -31,7 +33,6 @@ const int _OFFLINE_THROTTLE_MAX = 80;
 // Button globals
 const int _BUTTON_PIN = D5;
 bool _button_pressed = false;
-bool _wifi_on = true; // TODO: remove
 
 #pragma endregion globals }
 
@@ -44,8 +45,6 @@ void setup()
     Particle.subscribe(System.deviceID() + "/hook-response/IGLikes", getIGLikesCallback, MY_DEVICES);
     Particle.variable("data", _Data);
     Particle.variable("dataType", _DataType);
-    // TODO: remove published below this line
-    Particle.function("toggleType", toggleType);
 
     initAccessToken();
     initDisplay();
@@ -53,19 +52,21 @@ void setup()
 
 void loop()
 {
-    bool online = Particle.connected();
-    if (getAccessToken() == "" || (!online && getData() == ""))
+    if (shouldShowSetupInstructions())
     {
         // if no access token is linked, or particle is offline with no data to display
         showSetupInstructions();
     }
-    else if (online)
+    else
     {
         hideSetupInstructions();
-        tryUpdateDataDisplay();
     }
 
-    setOfflineStatus(!online);
+    if (Particle.connected())
+    {
+        tryUpdateDataDisplay();
+    }
+    setOfflineStatus();
     check_button();
 }
 
@@ -100,15 +101,31 @@ void forceUpdate()
     _LastDisplayUpdate = 0;
 }
 
-int toggleType(String arg)
-{ // TODO: remove function
-    toggleDataType();
-    return 1;
-}
-
 void logError(String message)
 {
     Particle.publish("ERROR", message);
+}
+
+// determines if the device should start showing setup instructions
+bool shouldShowSetupInstructions()
+{
+    // show instuctions if there is no IG access token stored
+    if (getAccessToken() == "")
+    {
+        return true;
+    }
+    // don't show setup instructins during the first few seconds of boot time
+    if (millis() < 6000)
+    {
+        return false;
+    }
+    // show instructions if the device is offline and there is no data to display (device has never been online)
+    if (!Particle.connected() && getData() == "")
+    {
+        return true;
+    }
+
+    return false;
 }
 
 // call to show setup instructions
@@ -282,8 +299,9 @@ void clearDisplay(bool redraw)
     }
 }
 
-void setOfflineStatus(bool offline)
+void setOfflineStatus()
 {
+    bool offline = !Particle.connected();
     bool blinkOn = _OfflineThrottle < _OFFLINE_THROTTLE_MAX / 2;
     _OfflineThrottle = (_OfflineThrottle + 1) % _OFFLINE_THROTTLE_MAX;
 
@@ -614,8 +632,7 @@ void check_button()
     {
         if (!_button_pressed)
         {
-            // toggleDataType();
-            toggle_wifi();
+            toggleDataType();
             _button_pressed = true;
         }
     }
@@ -623,19 +640,6 @@ void check_button()
     {
         _button_pressed = false;
     }
-}
-
-void toggle_wifi()
-{
-    if (_wifi_on)
-    {
-        WiFi.off();
-    }
-    else
-    {
-        WiFi.on();
-    }
-    _wifi_on = !_wifi_on;
 }
 
 String toggleDataType()
