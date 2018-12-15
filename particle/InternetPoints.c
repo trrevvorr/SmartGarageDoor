@@ -6,8 +6,8 @@ SYSTEM_THREAD(ENABLED);
 #pragma region globals {
 
 // EEPROM globals
-const int STRING_BUF_SIZE = 101; // num characters + 1 for null character
-const int BUF_ADDRESS = 0;       // EEPROM starting address
+const int _STRING_BUF_SIZE = 101; // num characters + 1 for null character
+const int _BUF_ADDRESS = 0;       // EEPROM starting address
 
 // Instagram globals
 const int _DISPLAY_UPDATE_INTERVAL = 60; // seconds, IG API rate limit = 200 requests / user / hour (>=18 sec between requests)
@@ -15,8 +15,8 @@ int _LastDisplayUpdate = 0;              // timestamp of when display was update
 String _AccessToken = "";
 const String FOLLOWERS_TYPE = "FOLLOWERS";
 const String LIKES_TYPE = "LIKES";
-String _DataType = FOLLOWERS_TYPE; // FOLLOWERS or TOT_LIKES
-String _Data = "";                 // number of likes or followers
+String _DataType = LIKES_TYPE; // defaults to likes
+String _Data = "";             // number of likes or followers
 String _PrevData = _Data;
 bool _DataDirty = true; // set to true when data is know to be out of date
 
@@ -471,18 +471,18 @@ void drawHeart(int startX)
 // used to store IG token
 void offlineWrite(String value)
 {
-    if (value.length() > STRING_BUF_SIZE - 1)
+    if (value.length() > _STRING_BUF_SIZE - 1)
     {
         logError("offlineWrite - value length exceeds max length");
     }
     else
     {
-        char stringBuf[STRING_BUF_SIZE];
+        char stringBuf[_STRING_BUF_SIZE];
 
         EEPROM.clear();
 
-        value.getBytes((unsigned char *)stringBuf, STRING_BUF_SIZE);
-        EEPROM.put(BUF_ADDRESS, stringBuf);
+        value.getBytes((unsigned char *)stringBuf, _STRING_BUF_SIZE);
+        EEPROM.put(_BUF_ADDRESS, stringBuf);
     }
 }
 
@@ -490,10 +490,10 @@ void offlineWrite(String value)
 // used to retrieve IG token
 String offlineRead()
 {
-    const int STRING_BUF_SIZE = 101; // num characters + 1 for null character
-    char stringBuf[STRING_BUF_SIZE];
+    const int _STRING_BUF_SIZE = 101; // num characters + 1 for null character
+    char stringBuf[_STRING_BUF_SIZE];
 
-    EEPROM.get(BUF_ADDRESS, stringBuf);
+    EEPROM.get(_BUF_ADDRESS, stringBuf);
     stringBuf[sizeof(stringBuf) - 1] = 0; // make sure it's null terminated
 
     String value(stringBuf);
