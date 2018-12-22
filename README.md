@@ -1,2 +1,3 @@
-# InternetPoints
-Display internet points on a MAX7219 display using Particle Photon
+# Smart Garage Door Opener
+
+Control garage doors using a particle photon and a web interface
