@@ -2,15 +2,8 @@
 
 const SIDE = {
   left: "left",
-  right: "right"
-};
-
-const STATE = {
-  loading: "loading",
-  open: "open",
-  closed: "closed",
-  offline: "offline"
-};
+  right: "right",
+}
 
 function parseURL() {
   const urlParams = new URLSearchParams(window.location.search);
@@ -40,17 +33,18 @@ function pingDevice(particleAccessToken, particleDeviceId) {
 
 function pingSuccess(response) {
   if (response.online) {
-    retrieveDoorStates();
+    getDoorStates();
+    document.querySelector("body").className = "onlineState";
+
   } else {
-    setDoorState(SIDE.left, STATE.offline);
-    setDoorState(SIDE.right, STATE.offline);
+    document.querySelector("body").className = "offlineState";
   }
 }
 
-function retrieveDoorStates() {
+function getDoorStates() {
   const { particleAccessToken, particleDeviceId } = parseURL();
-  retrieveDoorState(SIDE.left, particleAccessToken, particleDeviceId);
-  retrieveDoorState(SIDE.right, particleAccessToken, particleDeviceId);
+  getDoorState(SIDE.left, particleAccessToken, particleDeviceId);
+  getDoorState(SIDE.right, particleAccessToken, particleDeviceId);
 }
 
 /**
@@ -59,15 +53,11 @@ function retrieveDoorStates() {
  * @param particleAccessToken {string} access token for particle account
  * @param particleDeviceId {string} device ID of garage door opener device
  */
-function retrieveDoorState(side, particleAccessToken, particleDeviceId) {
+function getDoorState(side, particleAccessToken, particleDeviceId) {
   const url = `https://api.particle.io/v1/devices/${particleDeviceId}/${side}_open?access_token=${particleAccessToken}`;
   $.get(url)
-    .done((data, textStatus, jqXHR) => {
-      setDoorStateSuccess(data, side);
-    })
-    .fail((jqXHR, textStatus, errorThrown) => {
-      setDoorStateFail(errorThrown, side);
-    });
+    .done((data, textStatus, jqXHR) => { setDoorStateSuccess(data, side) })
+    .fail((jqXHR, textStatus, errorThrown) => { setDoorStateFail(errorThrown, side) });
 }
 
 /**
@@ -76,7 +66,7 @@ function retrieveDoorState(side, particleAccessToken, particleDeviceId) {
  * @param side {string} which side (SIDE obj value) the state applies to
  */
 function setDoorStateSuccess(data, side) {
-  const openState = data.result ? STATE.open : STATE.closed;
+  const openState = data.result ? "Open" : "Closed";
   setDoorState(side, openState);
 }
 
@@ -86,25 +76,19 @@ function setDoorStateSuccess(data, side) {
  * @param side {string} which side (SIDE obj value) the state applies to
  */
 function setDoorStateFail(errorThrown, side) {
-  setDoorState(side, STATE.offline);
-}
-
-function getDoorState(side) {
-  const doorFrame = document.querySelector(`.doorframe.${side}`);
-  return doorFrame.getAttribute("state");
+  setDoorState(side, errorThrown);
 }
 
 function setDoorState(side, state) {
-  const doorFrame = document.querySelector(`.doorframe.${side}`);
-  doorFrame.setAttribute("state", state);
+  const stateNode = document.querySelector(`#${side}DoorState`);
+  stateNode.textContent = state;
 }
 
+
+
 function timeout() {
-  if (getDoorState(SIDE.left) === STATE.loading) {
-    setDoorState(SIDE.left, STATE.offline);
-  }
-  if (getDoorState(SIDE.right) === STATE.loading) {
-    setDoorState(SIDE.right, STATE.offline);
+  if (document.querySelector("body").className === "loadingState") {
+    document.querySelector("body").className = "offlineState";
   }
 }
 
