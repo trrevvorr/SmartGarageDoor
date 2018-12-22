@@ -1,0 +1,124 @@
+body {
+	margin: 0;
+	padding: 0;
+  }
+
+  .sky {
+	width: 100vw;
+	height: 60vh;
+	background-color: lightblue;
+	position: relative;
+  }
+
+  .roof {
+	width: 64vw;
+	height: 20vh;
+	position: relative;
+	top: 20vh;
+	left: 18vw;
+	background-color: gray;
+	background:url(
+	  data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAANUlEQVQoU2N0cnL67+rqykAIMI5Mhe3t7f93794NDh1swQSTYwQphIUhTBA5TGGaURTiC3QAOtEiBNCiRAMAAAAASUVORK5CYII=
+	) repeat;
+  }
+
+  .gutter {
+	width: 64vw;
+	height: 1vh;
+	background-color: white;
+	position: absolute;
+	bottom: 0;
+  }
+
+  .siding {
+	width: 60vw;
+	height: 20vh;
+	background-color: gray;
+	position: relative;
+	top: 20vh;
+	left: 20vw;
+  }
+
+  .doorframe {
+	width: 20vw;
+	height: 17vh;
+	position: absolute;
+	border: 1vh solid white;
+	top: 2vh;
+	background-color: black;
+	overflow: hidden;
+  }
+
+  .doorframe.left {
+	left: 2vh;
+  }
+
+  .doorframe.right {
+	right: 2vh;
+  }
+
+  .door {
+	width: 100%;
+	height: 100%;
+	position:relative;
+	top: 0;
+	
+  }
+
+  .door.transition {
+	transition:top 10s linear;
+	}
+
+  .door.open {
+  	top: -100%;
+	}
+
+  .controlButton {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: transparent;
+	border: none;
+	font-size: 12vmin;
+	text-shadow: 0 2px gray;
+	}
+
+.doorframe .controlButton {
+  	color: white;
+  }
+
+  .door .controlButton {
+  	color: black;
+  }
+
+  .door-row {
+	box-sizing: border-box;
+	width: 100%;
+	height: 33.33%;
+  }
+
+  .door-cell {
+	box-sizing: border-box;
+	float: left;
+	width: 33.33%;
+	height: 100%;
+	border-top: 1.5vh solid white;
+	border-bottom: 1.5vh solid white;
+	border-right: 1vw solid white;
+	border-left: 1vw solid white;
+	background-color: #EAEAEA;
+  }
+
+  .grass {
+	width: 100vw;
+	height: 40vh;
+	background-color: #79d186;
+	position: relative;
+  }
+
+  .driveway {
+	width: 60vw;
+	margin-left: 20vw;
+	height: 40vh;
+	background-color: lightgray;
+  }
