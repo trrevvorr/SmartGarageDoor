@@ -1,14 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 	<meta charset="utf-8">
-	<title>Internet Points</title>
-	<link rel="stylesheet" href="style.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<title>Garage Doors</title>
+	<link rel="stylesheet" href="index.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	 crossorigin="anonymous">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="index.js"></script>
 </head>
 
-<body>
-
-	<h1>Internet Points!</h1>
-
+<body class="loadingState" onload="startPingDevice()">
+	<div class="container">
+		<div class="row">
+			<div class="col-1"></div>
+			<div class="col-10">
+				<div class="loadingIndicator loading row">
+					<h2>Connecting to your device...</h2>
+					<i class="spinner fa fa-circle-o-notch fa-spin"></i>
+				</div>
+				<div class="deviceStatusn row">
+					<h2 class="online">Device: <span>Online</span></h2>
+					<h2 class="offline">Device: <span>Offline</span></h2>
+				</div>
+				<div class="instructions offline row">
+					<p>To connect your device to the internet, try the following:</p>
+					<ol>
+						<li>Check your WiFi router. Is your internet working?</li>
+						<li>Unplug the smart garage door opener device and plug back in.</li>
+						<li>Call Trevor.</li>
+					</ol>
+				</div>
+				<div class="doorStatus online row">
+					<h2 class="col-6">Left: <span id="leftDoorStatus">Loading</span></h2>
+					<h2 class="col-6">Right: <span id="rightDoorStatus">Loading</span></h2>
+				</div>
+				<div class="doorControl online row">
+					<div class="leftDoor col-6">
+						<button type="button" class="open btn btn-success" onClick="openLeft();">Open Left</button>
+						<button type="button" class="close btn btn-danger" onClick="closeLeft();">Close Left</button>
+					</div>
+					<div class="rightDoor col-6">
+						<button type="button" class="open btn btn-success" onClick="openRight();">Open Right</button>
+						<button type="button" class="close btn btn-danger" onClick="closeRight();">Close Right</button>
+					</div>
+				</div>
+			</div>
+			<div class="col-1"></div>
+		</div>
+	</div>
 </body>
+
 </html>
