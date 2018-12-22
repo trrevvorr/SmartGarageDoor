@@ -22,8 +22,7 @@
 					<h2>Connecting to your device...</h2>
 					<i class="spinner fa fa-circle-o-notch fa-spin"></i>
 				</div>
-				<div class="deviceStatusn row">
-					<h2 class="online">Device: <span>Online</span></h2>
+				<div class="deviceStatus row">
 					<h2 class="offline">Device: <span>Offline</span></h2>
 				</div>
 				<div class="instructions offline row">
@@ -34,18 +33,30 @@
 						<li>Call Trevor.</li>
 					</ol>
 				</div>
-				<div class="doorStatus online row">
-					<h2 class="col-6">Left: <span id="leftDoorStatus">Loading</span></h2>
-					<h2 class="col-6">Right: <span id="rightDoorStatus">Loading</span></h2>
-				</div>
-				<div class="doorControl online row">
-					<div class="leftDoor col-6">
-						<button type="button" class="open btn btn-success" onClick="openLeft();">Open Left</button>
-						<button type="button" class="close btn btn-danger" onClick="closeLeft();">Close Left</button>
+				<div class=" online row">
+					<div class="door left col-6">
+						<h2>Left Door</h2>
+						<h3 class="state">State:
+							<span id="leftDoorState">
+								<i class="spinner fa fa-circle-o-notch fa-spin"></i>
+							</span>
+						</h3>
+						<div class="control">
+							<button type="button" class="openButton btn btn-success" onClick="openLeft();">Open Left</button>
+							<button type="button" class="closeButton btn btn-danger" onClick="closeLeft();">Close Left</button>
+						</div>
 					</div>
-					<div class="rightDoor col-6">
-						<button type="button" class="open btn btn-success" onClick="openRight();">Open Right</button>
-						<button type="button" class="close btn btn-danger" onClick="closeRight();">Close Right</button>
+					<div class="door right col-6">
+						<h2>Right Door</h2>
+						<h3 class="state">State:
+							<span id="rightDoorState">
+								<i class="spinner fa fa-circle-o-notch fa-spin"></i>
+							</span>
+						</h3>
+						<div class="control">
+							<button type="button" class="openButton btn btn-success" onClick="openRight();">Open Right</button>
+							<button type="button" class="closeButton btn btn-danger" onClick="closeRight();">Close Right</button>
+						</div>
 					</div>
 				</div>
 			</div>

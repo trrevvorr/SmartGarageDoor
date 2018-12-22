@@ -18,8 +18,8 @@ const int BUTTON_SR = D5;
 const int SENSOR_L = D7;
 const int SENSOR_R = D6;
 // door status variables
-String sensor_L_status = "";
-String sensor_R_status = "";
+bool sensor_L_open = false;
+bool sensor_R_open = false;
 
 #pragma endregion globals }
 
@@ -56,8 +56,8 @@ void setup()
     Particle.function("close_all", close_all);
 
     // register door status variables
-    Particle.variable("left_door", sensor_L_status);
-    Particle.variable("right_door", sensor_R_status);
+    Particle.variable("left_open", sensor_L_open);
+    Particle.variable("right_open", sensor_R_open);
 }
 
 void loop()
@@ -65,12 +65,24 @@ void loop()
     check_door_positions();
 }
 
+#pragma region helpers {
+
 void press_button(int button)
 {
     digitalWrite(button, LOW);
     delay(200);
     digitalWrite(button, HIGH);
 }
+
+void check_door_positions()
+{
+    sensor_L_open = digitalRead(SENSOR_L) == LOW;
+    sensor_R_open = digitalRead(SENSOR_R) == LOW;
+}
+
+#pragma endregion helpers }
+
+#pragma region left door {
 
 int open_left(String command)
 {
@@ -102,6 +114,10 @@ int toggle_left(String command)
     return 1;
 }
 
+#pragma endregion left door }
+
+#pragma region right door {
+
 int open_right(String command)
 {
     parse_and_delay(command);
@@ -131,6 +147,10 @@ int toggle_right(String command)
     Particle.publish("Event", "toggle_right");
     return 1;
 }
+
+#pragma endregion right door }
+
+#pragma region any door {
 
 int operate(String command)
 {
@@ -227,8 +247,6 @@ int close_all(String command)
     return 1;
 }
 
-void check_door_positions()
-{
-    sensor_L_status = (digitalRead(SENSOR_L) == LOW) ? "open" : "closed";
-    sensor_R_status = (digitalRead(SENSOR_R) == LOW) ? "open" : "closed";
-}
+#pragma endregion any door }
+
+
