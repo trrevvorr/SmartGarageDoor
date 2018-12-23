@@ -41,10 +41,10 @@ body {
 }
 
 .doorframe {
-	width: calc(40% - 2vmin);
-	height: calc(18vh - 1vmin);
+	width: calc(40% - 0.5rem);
+	height: calc(18vh - 0.25rem);
 	position: absolute;
-	border: 1vmin solid white;
+	border: 0.25rem solid white;
 	top: 2vh;
 	background-color: black;
 	overflow: hidden;
