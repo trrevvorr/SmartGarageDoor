@@ -71,6 +71,10 @@ body {
 	transition: top 10s linear;
 }
 
+.doorframe[state="offline"] .door.transition {
+	transition: none;
+}
+
 .doorframe[state="open"] .door {
 	top: -100%;
 }
@@ -97,6 +101,11 @@ button.statusIcon {
 .door .controlButton {
 	color: black;
 }
+
+.offlineIcon i {
+	color: #ffa300;
+}
+
 
 .door-row {
 	box-sizing: border-box;

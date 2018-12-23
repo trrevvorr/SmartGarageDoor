@@ -164,8 +164,3 @@ function operateDoor(action, side) {
       setDoorState(side, STATE.offline);
     });
 }
-
-// update the state every 30 seconds
-setInterval(() => {
-  updateDoorStates();
-}, 30000);
