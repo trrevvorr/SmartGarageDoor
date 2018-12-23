@@ -12,17 +12,18 @@ body {
 
 .roof {
 	width: 64vw;
+	max-width: 21rem;
 	height: 20vh;
 	position: relative;
 	top: 20vh;
-	left: 18vw;
+	margin: auto;
 	background-color: gray;
 	background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAKCAYAAACNMs+9AAAANUlEQVQoU2N0cnL67+rqykAIMI5Mhe3t7f93794NDh1swQSTYwQphIUhTBA5TGGaURTiC3QAOtEiBNCiRAMAAAAASUVORK5CYII=
 ) repeat;
 }
 
 .gutter {
-	width: 64vw;
+	width: 100%;
 	height: 1vh;
 	background-color: white;
 	position: absolute;
@@ -31,29 +32,30 @@ body {
 
 .siding {
 	width: 60vw;
+	max-width: 20rem;
 	height: 20vh;
 	background-color: gray;
 	position: relative;
 	top: 20vh;
-	left: 20vw;
+	margin: auto;
 }
 
 .doorframe {
-	width: 20vw;
-	height: 17vh;
+	width: calc(40% - 2vmin);
+	height: calc(18vh - 1vmin);
 	position: absolute;
-	border: 1vh solid white;
+	border: 1vmin solid white;
 	top: 2vh;
 	background-color: black;
 	overflow: hidden;
 }
 
 .doorframe.left {
-	left: 2vh;
+	left: 5%;
 }
 
 .doorframe.right {
-	right: 2vh;
+	right: 5%;
 }
 
 .doorframe[state="open"] .statusIcon, .doorframe[state="closed"] .statusIcon, .doorframe[state="loading"] .controlButton, .doorframe[state="loading"] .offlineIcon, .doorframe[state="offline"] .controlButton, .doorframe[state="offline"] .loadingIcon {
@@ -110,13 +112,13 @@ button.statusIcon {
 .door-row {
 	box-sizing: border-box;
 	width: 100%;
-	height: 33.33%;
+	height: calc(100% / 3);
 }
 
 .door-cell {
 	box-sizing: border-box;
 	float: left;
-	width: 33.33%;
+	width: calc(100% / 3);
 	height: 100%;
 	border-top: 1.5vh solid white;
 	border-bottom: 1.5vh solid white;
@@ -134,7 +136,8 @@ button.statusIcon {
 
 .driveway {
 	width: 60vw;
-	margin-left: 20vw;
+	max-width: 20rem;
+	margin: auto;
 	height: 40vh;
 	background-color: lightgray;
 }
