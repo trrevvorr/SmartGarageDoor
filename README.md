@@ -14,7 +14,7 @@ This is primarily a personal project, so it'll take a little work to get it work
   - See pin constants at top of `garage-door-opener.ino` for which pins to use
   - Reed swtiches should be normally open (i.e. they should read closed when the door is closed)
 1. Power up your Photon and navigate to `https://trrevvorr.github.io/SmartGarageDoor/?particle_access_token=<ACCESS_TOKEN>&particle_device_id=<DIVICE_ID>` with your Particle access token and device ID inserted in to the appropriate locations.
-1. If you configured everything correctly, the web app should render to something like this ![web app view](...)
+1. If you configured everything correctly, the web app should render to something like this ![web app view](Screenshot 2019-01-28 at 9.01.11 PM.png)
 
 ### Know Bugs
 - Doesn't render properly on iOS (and probably OS X)
