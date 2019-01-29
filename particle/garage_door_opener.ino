@@ -6,6 +6,7 @@
 
 #pragma region globals {
 
+// RELAY SWITCH PIN CONSTANTS //
 // left door pins
 const int BUTTON_OL = D0;
 const int BUTTON_CL = D1;
@@ -14,12 +15,19 @@ const int BUTTON_SL = D2;
 const int BUTTON_OR = D3;
 const int BUTTON_CR = D4;
 const int BUTTON_SR = D5;
+
+// REED SWITCH PIN CONSTANTS //
 // door sensors
 const int SENSOR_L = D7;
 const int SENSOR_R = D6;
+
 // door status variables
 bool sensor_L_open = false;
 bool sensor_R_open = false;
+// presence detection
+const String HOME = "home";
+const String AWAY = "away";
+String Presence = "";
 
 #pragma endregion globals }
 
@@ -78,6 +86,23 @@ void check_door_positions()
 {
     sensor_L_open = digitalRead(SENSOR_L) == LOW;
     sensor_R_open = digitalRead(SENSOR_R) == LOW;
+
+    if (sensor_L_open || sensor_R_open)
+    {
+        if (Presence != HOME) {
+            // state change
+            Presence = HOME;
+            Particle.publish("presence", HOME);
+        }
+    }
+    else
+    {
+        if (Presence != AWAY) {
+            // state change
+            Presence = AWAY;
+            Particle.publish("presence", AWAY);
+        }
+    }
 }
 
 #pragma endregion helpers }
@@ -248,5 +273,3 @@ int close_all(String command)
 }
 
 #pragma endregion any door }
-
-
